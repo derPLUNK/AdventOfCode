@@ -330,7 +330,7 @@ def num_trees(right, down):
     total_trees = 0
     pointer = 0
 
-    for i in range(0, len(matrix)-1, down):
+    for i in range(0, len(matrix)-down, down):
         for x in range(right):
             if pointer == len(matrix[0])-1:
                 pointer = -1
