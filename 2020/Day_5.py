@@ -1,6 +1,3 @@
-import math
-
-
 text_input = """BFBBBFBLRR
 BBFFFFFLRR
 BFBFBFFRLR
