@@ -600,9 +600,8 @@ contents = [i.split(" contain")[1] for i in text_input.split("\n")]
 
 def split_words(contents):
     output = []
-    items = contents.split(", ")
 
-    for i in items:
+    for i in contents.split(", "):
         if i != " no other bags.":
             count, name1, name2, bag = i.split()
             output.append([int(count), name1 + " " +
@@ -623,6 +622,8 @@ def num_bags(bag, rule_dict):
 
 
 rule_dict = dict(zip(containers, [split_words(i) for i in contents]))
+
+print(rule_dict)
 
 total_golds = 0
 for i in rule_dict.keys():
