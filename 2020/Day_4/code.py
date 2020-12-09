@@ -73,11 +73,12 @@ def total_valid_passports(passport_dict):
                 total_value_valid += 1
             total += 1
 
-    return [total, total_value_valid]
+    return total, total_value_valid
 
 
 passports = list_passports(text_input)
 passports = conv_dict(passports)
 
 
-print(total_valid_passports(passports))
+print(total_valid_passports(passports)[0])
+print(total_valid_passports(passports)[1])
