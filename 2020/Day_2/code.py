@@ -14,22 +14,17 @@ for i in lines:
     letter.append(i.split(":")[0][-1])
     password.append(i.split(": ")[1])
 
-# Part 1
-total_valid = 0
+
+total_valid_part1 = 0
+total_valid_part2 = 0
 
 for i in range(len(lines)):
     if min[i] <= password[i].count(letter[i]) <= max[i]:
-        total_valid += 1
-
-print(total_valid)
-
-# Part 2
-total_valid = 0
-
-for i in range(len(lines)):
+        total_valid_part1 += 1
     if password[i][min[i]-1] == letter[i] or password[i][max[i]-1] == letter[i]:
-        total_valid += 1
+        total_valid_part2 += 1
     if password[i][min[i]-1] == letter[i] and password[i][max[i]-1] == letter[i]:
-        total_valid -= 1
+        total_valid_part2 -= 1
 
-print(total_valid)
+print(total_valid_part1)
+print(total_valid_part2)
