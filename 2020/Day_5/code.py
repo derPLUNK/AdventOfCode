@@ -26,4 +26,4 @@ id.sort()
 
 
 print(max(id))
-print([i for i in range(min(id), max(id)) if i not in id])
+print([i for i in range(min(id), max(id)) if i not in id][0])
