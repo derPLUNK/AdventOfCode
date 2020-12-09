@@ -26,4 +26,5 @@ for i in [[1, 1], [3, 1], [5, 1], [7, 1], [1, 2]]:
     x = num_trees(i[0], i[1])
     total *= x
 
+print(num_trees(3, 1))
 print(total)
