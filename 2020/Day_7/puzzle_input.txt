@@ -1,4 +1,4 @@
-text_input = """muted lavender bags contain 5 dull brown bags, 4 pale maroon bags, 2 drab orange bags.
+muted lavender bags contain 5 dull brown bags, 4 pale maroon bags, 2 drab orange bags.
 plaid aqua bags contain 1 posh violet bag, 5 pale yellow bags, 4 bright salmon bags.
 wavy lime bags contain 3 vibrant indigo bags, 1 posh gray bag.
 pale coral bags contain 5 mirrored olive bags, 2 posh salmon bags.
@@ -591,44 +591,4 @@ striped aqua bags contain 1 plaid blue bag, 1 dark plum bag, 4 faded lavender ba
 dotted plum bags contain 5 mirrored green bags, 1 dark plum bag, 4 dark maroon bags.
 faded gold bags contain 4 pale yellow bags.
 vibrant beige bags contain 2 light lavender bags, 3 faded indigo bags.
-light brown bags contain 3 drab brown bags, 4 dark violet bags, 3 faded indigo bags."""
-
-containers = [i.split(" contain")[0].rstrip("s")
-              for i in text_input.split("\n")]
-contents = [i.split(" contain")[1] for i in text_input.split("\n")]
-
-
-def split_words(contents):
-    output = []
-
-    for i in contents.split(", "):
-        if i != " no other bags.":
-            count, name1, name2, bag = i.split()
-            output.append([int(count), name1 + " " +
-                           name2 + " " + bag.rstrip("s.")])
-
-    return output
-
-
-def bag_contains(bag, rule_dict):
-    for i in rule_dict[bag]:
-        if i[1] == "shiny gold bag" or bag_contains(i[1], rule_dict):
-            return True
-    return False
-
-
-def num_bags(bag, rule_dict):
-    return sum(i[0] * (1 + num_bags(i[1], rule_dict)) for i in rule_dict[bag])
-
-
-rule_dict = dict(zip(containers, [split_words(i) for i in contents]))
-
-print(rule_dict)
-
-total_golds = 0
-for i in rule_dict.keys():
-    if bag_contains(i, rule_dict):
-        total_golds += 1
-
-print(total_golds)
-print(num_bags("shiny gold bag", rule_dict))
+light brown bags contain 3 drab brown bags, 4 dark violet bags, 3 faded indigo bags.
