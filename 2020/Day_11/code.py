@@ -5,22 +5,13 @@ with open(f"{__file__.rstrip('code.py')}puzzle_input.txt", mode="r") as file:
     text_input = file.read()
 
 
-def pretty_print(seat_matrix):
-    for row in range(len(seat_matrix)):
-        for col in range(len(seat_matrix[0])):
-            print(f"{seat_matrix[row][col]}", end="")
-        print()
-
-
 def seats_seen_part1(row, col, initial_matrix, part_number):
     if part_number == 1:
         seats = []
-
         for i in [-1, 0, 1]:
             for x in [-1, 0, 1]:
                 if 0 <= row + i < len(initial_matrix) and 0 <= col + x < len(initial_matrix[0]):
                     seats.append(initial_matrix[row+i][col+x])
-
         seats[seats.index(initial_matrix[row][col])] = 0
 
         return seats
@@ -68,9 +59,7 @@ def seats_seen_part1(row, col, initial_matrix, part_number):
                 if initial_matrix[row+i][col+i] in "#L":
                     seats.append(initial_matrix[row+i][col+i])
                     break
-        # if initial_matrix[row][col] in "#L":
-        #     print("".join(initial_matrix[row]),
-        #           initial_matrix[row][col], row, col, seats, seats.count("#"))
+
         return seats
 
 
@@ -79,10 +68,11 @@ def neighbours(row, col, initial_matrix, new_matrix, part_number):
 
     if initial_matrix[row][col] == "L" and "#" not in seats and initial_matrix[row][col] != ".":
         new_matrix[row][col] = "#"
+
     if part_number == 1:
         if initial_matrix[row][col] == "#" and seats.count("#") >= 4:
             new_matrix[row][col] = "L"
-    if part_number == 2:
+    elif part_number == 2:
         if initial_matrix[row][col] == "#" and seats.count("#") > 4:
             new_matrix[row][col] = "L"
 
