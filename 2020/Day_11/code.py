@@ -5,66 +5,67 @@ with open(f"{__file__.rstrip('code.py')}puzzle_input.txt", mode="r") as file:
     text_input = file.read()
 
 
-def seats_seen_part1(row, col, initial_matrix, part_number):
-    if part_number == 1:
-        seats = []
-        for i in [-1, 0, 1]:
-            for x in [-1, 0, 1]:
-                if 0 <= row + i < len(initial_matrix) and 0 <= col + x < len(initial_matrix[0]):
-                    seats.append(initial_matrix[row+i][col+x])
-        seats[seats.index(initial_matrix[row][col])] = 0
+def seats_seen(row, col, initial_matrix, part_number):
+    if initial_matrix[row][col] != ".":
+        if part_number == 1:
+            seats = []
+            for i in [-1, 0, 1]:
+                for x in [-1, 0, 1]:
+                    if 0 <= row + i < len(initial_matrix) and 0 <= col + x < len(initial_matrix[0]):
+                        seats.append(initial_matrix[row+i][col+x])
+            seats[seats.index(initial_matrix[row][col])] = 0
 
-        return seats
+            return seats
 
-    elif part_number == 2:
-        seats = []
-        for i in range(1, col+1):
-            if 0 <= col-i < len(initial_matrix[0]):
-                if initial_matrix[row][col-i] in "#L":
-                    seats.append(initial_matrix[row][col-i])
-                    break
-        for i in range(col+1, len(initial_matrix[0])):
-            if 0 <= i < len(initial_matrix[0]):
-                if initial_matrix[row][i] in "#L":
-                    seats.append(initial_matrix[row][i])
-                    break
-        for i in range(1, row+1):
-            if 0 <= row - i < len(initial_matrix):
-                if initial_matrix[row-i][col] in "#L":
-                    seats.append(initial_matrix[row-i][col])
-                    break
-        for i in range(row+1, len(initial_matrix)):
-            if 0 <= i < len(initial_matrix):
-                if initial_matrix[i][col] in "#L":
-                    seats.append(initial_matrix[i][col])
-                    break
+        elif part_number == 2:
+            seats = []
+            for i in range(1, col+1):
+                if 0 <= col-i < len(initial_matrix[0]):
+                    if initial_matrix[row][col-i] in "#L":
+                        seats.append(initial_matrix[row][col-i])
+                        break
+            for i in range(col+1, len(initial_matrix[0])):
+                if 0 <= i < len(initial_matrix[0]):
+                    if initial_matrix[row][i] in "#L":
+                        seats.append(initial_matrix[row][i])
+                        break
+            for i in range(1, row+1):
+                if 0 <= row - i < len(initial_matrix):
+                    if initial_matrix[row-i][col] in "#L":
+                        seats.append(initial_matrix[row-i][col])
+                        break
+            for i in range(row+1, len(initial_matrix)):
+                if 0 <= i < len(initial_matrix):
+                    if initial_matrix[i][col] in "#L":
+                        seats.append(initial_matrix[i][col])
+                        break
 
-        for i in range(1, col+1):
-            if 0 <= row-i < len(initial_matrix) and 0 <= col-i < len(initial_matrix[0]):
-                if initial_matrix[row-i][col-i] in "#L":
-                    seats.append(initial_matrix[row-i][col-i])
-                    break
-        for i in range(1, col+1):
-            if 0 <= row+i < len(initial_matrix) and 0 <= col-i < len(initial_matrix[0]):
-                if initial_matrix[row+i][col-i] in "#L":
-                    seats.append(initial_matrix[row+i][col-i])
-                    break
-        for i in range(1, len(initial_matrix[0])-col):
-            if 0 <= row-i < len(initial_matrix) and 0 <= col+i < len(initial_matrix[0]):
-                if initial_matrix[row-i][col+i] in "#L":
-                    seats.append(initial_matrix[row-i][col+i])
-                    break
-        for i in range(1, len(initial_matrix[0])-col):
-            if 0 <= row+i < len(initial_matrix) and 0 <= col+i < len(initial_matrix[0]):
-                if initial_matrix[row+i][col+i] in "#L":
-                    seats.append(initial_matrix[row+i][col+i])
-                    break
+            for i in range(1, col+1):
+                if 0 <= row-i < len(initial_matrix) and 0 <= col-i < len(initial_matrix[0]):
+                    if initial_matrix[row-i][col-i] in "#L":
+                        seats.append(initial_matrix[row-i][col-i])
+                        break
+            for i in range(1, col+1):
+                if 0 <= row+i < len(initial_matrix) and 0 <= col-i < len(initial_matrix[0]):
+                    if initial_matrix[row+i][col-i] in "#L":
+                        seats.append(initial_matrix[row+i][col-i])
+                        break
+            for i in range(1, len(initial_matrix[0])-col):
+                if 0 <= row-i < len(initial_matrix) and 0 <= col+i < len(initial_matrix[0]):
+                    if initial_matrix[row-i][col+i] in "#L":
+                        seats.append(initial_matrix[row-i][col+i])
+                        break
+            for i in range(1, len(initial_matrix[0])-col):
+                if 0 <= row+i < len(initial_matrix) and 0 <= col+i < len(initial_matrix[0]):
+                    if initial_matrix[row+i][col+i] in "#L":
+                        seats.append(initial_matrix[row+i][col+i])
+                        break
 
         return seats
 
 
 def neighbours(row, col, initial_matrix, new_matrix, part_number):
-    seats = seats_seen_part1(row, col, initial_matrix, part_number)
+    seats = seats_seen(row, col, initial_matrix, part_number)
 
     if initial_matrix[row][col] == "L" and "#" not in seats and initial_matrix[row][col] != ".":
         new_matrix[row][col] = "#"
