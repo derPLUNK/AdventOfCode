@@ -1,8 +1,6 @@
 with open(f"{__file__.rstrip('code.py')}puzzle_input.txt", mode="r") as file:
     text_input = file.read()
 
-lines = [[i[0], int(i[1:])] for i in text_input.split("\n")]
-
 
 class Position():
     def __init__(self, east=0, north=0):
@@ -27,7 +25,7 @@ class Position():
         if i[0] == "F":
             self.move([self.direction, i[1]])
         else:
-            distance = i[1]*{"E": 1, "N": 1, "S": -1, "W": -1}[i[0]]
+            distance = i[1] * {"E": 1, "N": 1, "S": -1, "W": -1}[i[0]]
             if i[0] in "EW":
                 self.east += distance
             else:
@@ -38,21 +36,23 @@ class Position():
         self.north += waypoint_position[1] * i[1]
 
     def turn_waypoint(self, i):
-        if i[0] == "R" and i[1] > 0:
-            current_position = self.current_position()
-            self.east = current_position[1]
-            self.north = -current_position[0]
+        current_position = self.get_current_position()
+        if i[1] > 0:
+            if i[0] == "R":
+                self.east = current_position[1]
+                self.north = -current_position[0]
+
+            if i[0] == "L":
+                self.east = -current_position[1]
+                self.north = current_position[0]
+
             self.turn_waypoint([i[0], i[1] - 90])
 
-        if i[0] == "L" and i[1] > 0:
-            current_position = self.current_position()
-            self.east = -current_position[1]
-            self.north = current_position[0]
-            self.turn_waypoint([i[0], i[1] - 90])
-
-    def current_position(self):
+    def get_current_position(self):
         return [self.east, self.north]
 
+
+lines = [[i[0], int(i[1:])] for i in text_input.split("\n")]
 
 ship_part_1 = Position()
 waypoint_part_2 = Position(10, 1)
@@ -68,7 +68,7 @@ for i in lines:
 # Part 2
 for i in lines:
     if i[0] == "F":
-        ship_part_2.move_ship(waypoint_part_2.current_position(), i)
+        ship_part_2.move_ship(waypoint_part_2.get_current_position(), i)
     if i[0] in "ESWN":
         waypoint_part_2.move(i)
     if i[0] in "LR":
