@@ -1,6 +1,3 @@
-from os import linesep
-
-
 with open(f"{__file__.rstrip('code.py')}puzzle_input.txt", mode="r") as file:
     text_input = file.read()
 
@@ -27,8 +24,6 @@ class Position():
         self.direction = self.directions[index]
 
     def move(self, i):
-        counters = [self.east, self.north]
-
         if i[0] == "F":
             self.move([self.direction, i[1]])
         else:
@@ -38,14 +33,47 @@ class Position():
             else:
                 self.north += distance
 
+    def move_ship(self, waypoint_position, i):
+        self.east += waypoint_position[0] * i[1]
+        self.north += waypoint_position[1] * i[1]
 
-part1 = Position()
+    def turn_waypoint(self, i):
+        if i[0] == "R" and i[1] > 0:
+            current_position = self.current_position()
+            self.east = current_position[1]
+            self.north = -current_position[0]
+            self.turn_waypoint([i[0], i[1] - 90])
 
+        if i[0] == "L" and i[1] > 0:
+            current_position = self.current_position()
+            self.east = -current_position[1]
+            self.north = current_position[0]
+            self.turn_waypoint([i[0], i[1] - 90])
+
+    def current_position(self):
+        return [self.east, self.north]
+
+
+ship_part_1 = Position()
+waypoint_part_2 = Position(10, 1)
+ship_part_2 = Position()
+
+# Part 1
 for i in lines:
     if i[0] in "RL":
-        part1.turn(i)
+        ship_part_1.turn(i)
     else:
-        part1.move(i)
+        ship_part_1.move(i)
+
+# Part 2
+for i in lines:
+    if i[0] == "F":
+        ship_part_2.move_ship(waypoint_part_2.current_position(), i)
+    if i[0] in "ESWN":
+        waypoint_part_2.move(i)
+    if i[0] in "LR":
+        waypoint_part_2.turn_waypoint(i)
 
 
-print(part1)
+print(ship_part_1)
+print(ship_part_2)
