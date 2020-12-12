@@ -14,7 +14,6 @@ for i in lines:
     letter.append(i.split(":")[0][-1])
     password.append(i.split(": ")[1])
 
-
 total_valid_part1 = 0
 total_valid_part2 = 0
 
